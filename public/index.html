@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Envio de Mensagem RCS</title>
+</head>
+<body>
+  <h2>Envio de mensagem teste</h2>
+  <form id="form">
+    <label>Telefone:</label><br>
+    <input type="text" id="to" name="to"><br><br>
+    <label>Mensagem:</label><br>
+    <input type="text" id="message" name="message"><br><br>
+    <button type="submit">Enviar</button>
+  </form>
+  <script>
+    document.getElementById('form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const to = document.getElementById('to').value;
+      const message = document.getElementById('message').value;
+      const response = await fetch('/api/enviar', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': 'SUA_CHAVE_DE_SEGURANCA'
+        },
+        body: JSON.stringify({ to, message })
+      });
+      const data = await response.json();
+      alert(JSON.stringify(data));
+    });
+  </script>
+</body>
+</html>
